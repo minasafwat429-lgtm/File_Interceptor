@@ -46,11 +46,11 @@ pip install -r requirements.txt
 chmod +x script.py
 ```
 ## Usage
-Step 1: Enable IP forwarding
+- Step 1: Enable IP forwarding
 ```
 sudo echo 1 > /proc/sys/net/ipv4/ip_forward
 ```
-Step 2: Set iptables rules
+- Step 2: Set iptables rules
 ```
 # Forward all traffic to NFQUEUE
 sudo iptables -I FORWARD -j NFQUEUE --queue-num 1
@@ -59,13 +59,26 @@ sudo iptables -I FORWARD -j NFQUEUE --queue-num 1
 sudo iptables -I INPUT -j NFQUEUE --queue-num 1
 sudo iptables -I OUTPUT -j NFQUEUE --queue-num 1
 ```
-Step 3: Run the script
+- Step 3: Run the script
 ```
 sudo python3 script.py
 ```
-Step 4: Clean up (CTRL+C then run)
+- Step 4: Clean up (CTRL+C then run)
 ```
 sudo iptables --flush
 ```
 
+## 🛡️ How It Works
+- Packet Interception: iptables redirects all network packets to queue #1
+- HTTP Detection: Script monitors TCP port 80 traffic
+- .exe Request Detection: Identifies when a client requests a .exe file
+- Response Manipulation: Replaces the legitimate response with a 301 redirect
+- Redirection: Victim gets redirected to download malicious file
 
+
+## ⚖️ Legal Compliance
+By using this tool, you agree:
+You will only use it for legitimate educational purposes
+You have obtained necessary permissions for any testing
+You accept full legal responsibility for your actions
+The author(s) are not liable for misuse
