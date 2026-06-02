@@ -44,3 +44,28 @@ pip install -r requirements.txt
 
 # Make script executable
 chmod +x script.py
+```
+## Usage
+Step 1: Enable IP forwarding
+```
+sudo echo 1 > /proc/sys/net/ipv4/ip_forward
+```
+Step 2: Set iptables rules
+```
+# Forward all traffic to NFQUEUE
+sudo iptables -I FORWARD -j NFQUEUE --queue-num 1
+
+# OR for local traffic only
+sudo iptables -I INPUT -j NFQUEUE --queue-num 1
+sudo iptables -I OUTPUT -j NFQUEUE --queue-num 1
+```
+Step 3: Run the script
+```
+sudo python3 script.py
+```
+Step 4: Clean up (CTRL+C then run)
+```
+sudo iptables --flush
+```
+
+
